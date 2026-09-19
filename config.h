@@ -12,8 +12,8 @@ static const unsigned int alphas[][3]      = {
   [SchemeUrg]  = { OPAQUE, baralpha, borderalpha },
 };
 
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int snap      = 30;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=10:antialias=true:autohint=true","monospace:size=10","Noto Color Emoji:size=10:antialias=true:autohint=true"};
@@ -35,6 +35,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Cisco Packet Tracer 9.0.1 ",  NULL,       NULL,       0,       0,           -1 },
 };
 
 /* layout(s) */
@@ -67,12 +68,11 @@ static char dmenumon[2] = "0";
 static const char *dmenucmd[]  = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-show", "drun", NULL};
-static const char *filemgr[]  = { "nemo", NULL};
-static const char *impala[]   = { "alacritty", "-e", "sudo", "impala", NULL};
-static const char *powermenu[] = { "/home/johanr2/.local/bin/powermenu.sh", NULL };
+static const char *filemgr[]  = { "thunar", NULL};
+static const char *powermenu[] = { "/home/johanr2/.config/dwm/powermenu.sh", NULL };
 
-static const char *upvol[]   = { "/home/johanr2/.local/bin/vol.sh","up", NULL };
-static const char *downvol[] = { "/home/johanr2/.local/bin/vol.sh", "down",NULL };
+static const char *upvol[]   = { "wpctl" ,"set-volume","@DEFAULT_AUDIO_SINK@","0.05+", NULL };
+static const char *downvol[]   = { "wpctl" ,"set-volume","@DEFAULT_AUDIO_SINK@","0.05-", NULL };
 static const char *mutevol[] = { "/home/johanr2/.local/bin/vol.sh", "mute", NULL };
 static const char *mutemic[] = { "pamixer", "--default-source", "-t", NULL };
 
@@ -82,7 +82,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
   { MODKEY,                       XK_e,      spawn,          {.v = filemgr }},
-  { MODKEY,                       XK_n,      spawn,          {.v = impala }},
+	{ MODKEY,                       XK_F5, spawn, SHCMD("setxkbmap us")},
+	{ MODKEY,                       XK_F6, spawn, SHCMD("setxkbmap latam")},
 /* Scripts adaptados para X11 */
   { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("~/.config/dwm/screenshot.sh full") },
   { MODKEY|ControlMask,           XK_s,      spawn,          SHCMD("~/.config/dwm/screenshot.sh") },
@@ -97,8 +98,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 
-	{ MODKEY,                       XK_comma,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_period,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.04} },
+	{ MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.04} },
 
 	{ MODKEY|ShiftMask,             XK_j,      zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_k,      zoom,           {0} },
@@ -118,10 +119,10 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_t,      togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_h,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_l, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_h,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_l, tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_h,      focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_l,      focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_h,      tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_l,      tagmon,         {.i = +1 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
